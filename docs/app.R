@@ -1,45 +1,46 @@
-#
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-
-library(shiny)
-
-# Define UI for application that draws a histogram
-ui <- fluidPage(
-   
-   # Application title
-   titlePanel("Youth Education across the world"),
-   
-   # Sidebar with a slider input for number of bins 
-   sidebarLayout(
-      sidebarPanel(
-         p("m")
-      ),
-      
-      # Show a plot of the generated distribution
-      mainPanel(
-         plotOutput("distPlot")
-      )
-   )
+page_one <- tabPanel(
+  "Background & Research Questions", # label for the tab in the navbar
+  titlePanel("Background & Research Questions"), # show with a displayed title
+  
+  # This content uses a sidebar layout
+  p("Our project is ....")
 )
 
-# Define server logic required to draw a histogram
-server <- function(input, output) {
-   
-   output$distPlot <- renderPlot({
-      # generate bins based on input$bins from ui.R
-      x    <- faithful[, 2] 
-      bins <- seq(min(x), max(x), length.out = input$bins + 1)
-      
-      # draw the histogram with the specified number of bins
-      hist(x, breaks = bins, col = 'darkgray', border = 'white')
-   })
-}
+# Define content for the second page
+page_two <- tabPanel(
+  "Visualization" # label for the tab in the navbar
+  # ...more content would go here...
+)
+
+# Define content for the third page
+page_three <- tabPanel(
+  "Conclusion" # label for the tab in the navbar
+  # ...more content would go here...
+)
+
+# Define content for the third page
+page_four <- tabPanel(
+  "About the Tech" # label for the tab in the navbar
+  # ...more content would go here...
+)
+
+# Define content for the third page
+page_five <- tabPanel(
+  "About Us" # label for the tab in the navbar
+  # ...more content would go here...
+)
+
+ui <- navbarPage(
+  "Youth Education Across the World", # application title
+  page_one,         # include the first page content
+  page_two,         # include the second page content
+  page_three,       # include the third page content
+  page_four,
+  page_five
+)
+
+
+# Pass each page to a multi-page layout (`navbarPage`)
 
 # Run the application 
 shinyApp(ui = ui, server = server)
