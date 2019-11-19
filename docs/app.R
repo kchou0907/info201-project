@@ -1,9 +1,11 @@
-source("m.R")
+source("analysis.R")
 
 # Load the shiny, ggplot2, and dplyr libraries
 library("shiny")
 library("ggplot2")
 library("dplyr")
+library("ggmap")
+library("ggplot2")
 
 # Read the file
 

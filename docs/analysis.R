@@ -1,6 +1,9 @@
 # Load ggplot2, and dplyr libraries
+library("plotly")
 library("ggplot2")
 library("dplyr")
+library("ggmap")
+
 
 # Read the data
 education_data <- read.csv("../data/barro_lee_dataset.csv", stringsAsFactors = FALSE)
