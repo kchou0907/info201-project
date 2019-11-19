@@ -23,7 +23,7 @@ page_one <- tabPanel(
 
 # Define content for the second page
 page_two <- tabPanel(
-  "Visualization",
+  "Visualization I",
   titlePanel("The percentage of primary school completion per country based on different region in 2010"),
   
   sidebarLayout(
@@ -38,21 +38,22 @@ page_two <- tabPanel(
     ),
     
     mainPanel(
-      plotOutput("plot"),
-      plotlyOutput("map")
+      plotOutput("plot")
     )
   )
 )
 
 # Define content for the third page
 page_three <- tabPanel(
-  "Conclusion" # label for the tab in the navbar
+  "Visualization II",
+  titlePanel("A map"),
+  plotlyOutput("map")
   # ...more content would go here...
 )
 
 # Define content for the third page
 page_four <- tabPanel(
-  "About the Tech" # label for the tab in the navbar
+  "Visualization III" # label for the tab in the navbar
   # ...more content would go here...
 )
 
