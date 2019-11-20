@@ -1,42 +1,38 @@
+# Source the file
 source("analysis.R")
 
-# Load the shiny, ggplot2, and dplyr libraries
+# Load the shiny, ggplot2, ggmap, and dplyr libraries
 library("shiny")
 library("ggplot2")
 library("dplyr")
 library("ggmap")
 library("ggplot2")
 
-# Read the file
-
+# Define content for the first page
 page_one <- tabPanel(
   "Background & Research Questions", # label for the tab in the navbar
   titlePanel("Page 1"), # show with a displayed title
-  
-  # This content uses a sidebar layout
-  
- # show with a displayed title
-  
-  # This content uses a sidebar layout
   p("Our project is ....")
 )
 
 # Define content for the second page
+# Display a dropdown menu that lets the user pick one of
+# the regions to show the percentage of primany school completion
+# per country in that region in 2010
 page_two <- tabPanel(
-  "Visualization I",
-  titlePanel("The percentage of primary school completion per country based on different region in 2010"),
-  
+  "Visualization I", 
+  titlePanel("The percentage of primary school completion per country 
+             based on different region in 2010"), 
   sidebarLayout(
     sidebarPanel(
-      helpText("Show user the percentage of primary complete per country based on different region"),
-      
-      selectInput("region",
+      helpText("Show user the percentage of primary school completion per 
+               country based on different region"),
+      selectInput(inputId = "region",
                   label = "Choose a region",
                   choices = unique(education_data$region_code),
                   selected = "Middle East and North Africa"
       )
     ),
-    
     mainPanel(
       plotOutput("plot")
     )
@@ -44,17 +40,34 @@ page_two <- tabPanel(
 )
 
 # Define content for the third page
+# Display a map of no schooling in 2010 in each country
 page_three <- tabPanel(
   "Visualization II",
-  titlePanel("A map"),
+  titlePanel("A map of no schooling in each country in 2010"),
   plotlyOutput("map")
-  # ...more content would go here...
 )
 
 # Define content for the third page
+# Display a dropdown menu that lets the user pick one of
+# the regions to show the percentage of no schooling 
+# in that region in 2010
 page_four <- tabPanel(
-  "Visualization III" # label for the tab in the navbar
-  # ...more content would go here...
+  "Visualization III",
+  titlePanel("The percentage of no schooling in different regions"),
+  sidebarLayout(
+    sidebarPanel(
+      helpText("Show user the percentage of no schooling based 
+               on different region"),
+      selectInput(inputId = "no_school_region",
+                  label = "Choose a region",
+                  choices = unique(education_data$region_code),
+                  selected = "Middle East and North Africa"
+      )
+    ),
+    mainPanel(
+      plotOutput("no_school_plot")
+    )
+  )
 )
 
 # Define content for the third page
@@ -64,23 +77,25 @@ page_five <- tabPanel(
 )
 
 ui <- fluidPage(
-  titlePanel("Youth Education Across the World"), # application title
+  titlePanel("Youth Education Across the World"), 
   tabsetPanel(
-  page_one,         # include the first page content
-  page_two,         # include the second page content
-  page_three,       # include the third page content
-  page_four,        # include the four page content
-  page_five         # include the five page content 
+  page_one,        
+  page_two,         
+  page_three,       
+  page_four,  
+  page_five         
   )
 )
-
 
 server <- function(input, output) {
   output$plot <- renderPlot({
     ggplot(get_specific_lpc(input$region), 
            aes(x = abbreviate(country), y = lpc, fill = country)
     ) +
-    geom_col()
+    geom_col() +
+    labs(title = paste0("The percentage of primary school completion in ",
+                        input$region, " in 2010"),
+           x = "Country", y = "% of primary school completion")
   })
   output$map <- renderPlotly({
     map <- plot_geo(
@@ -92,11 +107,21 @@ server <- function(input, output) {
     )  
     return(map)
   })
+  output$no_school_plot <- renderPlot({
+    ggplot(data = avg_lu_for_region(input$no_school_region),
+           mapping = aes(x = year, y = lu)) +
+      geom_point() +
+      geom_smooth() +
+      labs(title = paste("The Percentage of No Schooling in", 
+                         input$no_school_region),
+           x = "Year", y = "% of No Schooling") +
+      scale_x_continuous(breaks = seq(1950, 2010, 5)) +
+      scale_y_continuous(breaks = seq(0, 100, 10))
   
+  })
 }
 
-# Pass each page to a multi-page layout (`navbarPage`)
-
-# Run the application 
 shinyApp(ui = ui, server = server)
+
+
 
