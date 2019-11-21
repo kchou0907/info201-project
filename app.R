@@ -108,7 +108,7 @@ page_seven <- tabPanel(
   tags$ul(
     tags$li("Kayla Chea"),
     tags$li("Kevin Chou"),
-    tags$li("Sinan Zhou"),
+    tags$li("Sinan Zhao"),
     tags$li("Yanpei Xu")
   )
 )
