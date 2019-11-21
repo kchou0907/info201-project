@@ -4,4 +4,4 @@ Our project focuses on education inequality. We will be creating various visuali
 
 This is our [technical report](https://github.com/kaylamchea/info201-project/wiki/Technical-Report).
 
-This is our [shiny application](http://127.0.0.1:5274/).
+This is our [shiny application](https://info201.shinyapps.io/info201/).
