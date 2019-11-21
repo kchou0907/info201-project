@@ -99,8 +99,10 @@ page_six <- tabPanel(
     plotly. We did not use any APIs."),
   p(
     "For more information read our",
-    a("technical report", href =
-      "https://github.com/kaylamchea/info201-project/wiki/Technical-Report")
+    a("technical report",
+      href =
+        "https://github.com/kaylamchea/info201-project/wiki/Technical-Report"
+    )
   )
 )
 
